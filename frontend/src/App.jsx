@@ -3,7 +3,7 @@ import "./App.css";
 import io from "socket.io-client";
 import Editor from "@monaco-editor/react";
 
-const socket = io("https://realtime-code-editor-final.onrender.com");
+const socket = io("http://localhost:5000");
 
 const App = () => {
   const [joined, setJoined] = useState(false);
@@ -94,6 +94,12 @@ const App = () => {
     socket.emit("languageChange", { roomId, language: newLanguage });
   };
 
+  const createRoomID = (e) => {
+    e.preventDefault();
+    const id = Math.floor(100000 + Math.random() * 900000).toString();
+    setRoomId(id);
+  };
+
   const runCode = () => {
     socket.emit("compileCode", { code, roomId, language, version });
   };
@@ -116,7 +122,16 @@ const App = () => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <button onClick={joinRoom}>Join Room</button>
+          <span>Don't have invite?&nbsp;
+            <a onClick={createRoomID} className="newRoomID">New Room</a>
+          </span>
+          
         </div>
+        <footer>Built with 🔥 by &nbsp;
+          <a href="https://github.com/ShreedharG" target="_blank" rel="noopener noreferrer">
+            Shreedhar Goyal
+          </a>
+        </footer>
       </div>
     );
   }
@@ -134,7 +149,7 @@ const App = () => {
         <h3>Users in Room:</h3>
         <ul>
           {users.map((user, index) => (
-            <li key={index}>{user.slice(0, 8)}...</li>
+            <li key={index}>{user.slice(0, 10)}</li>
           ))}
         </ul>
         <p className="typing-indicator">{typing}</p>
