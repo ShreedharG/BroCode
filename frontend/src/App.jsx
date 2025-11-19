@@ -122,7 +122,7 @@ const App = () => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <button onClick={joinRoom}>Join Room</button>
-          <span>Don't have invite?&nbsp;
+          <span>Don&apos;t have invite?&nbsp;
             <a onClick={createRoomID} className="newRoomID">New Room</a>
           </span>
           
